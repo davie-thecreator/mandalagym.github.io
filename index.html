@@ -1,60 +1,1004 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Mandala Gym and fitness center</title>
-  <style>
-    body { font-family: Arial, sans-serif; margin:0; background:#f4f4f4; }
-    header { background:#111; color:white; padding:20px; text-align:center; }
-    nav a { color:white; margin:0 15px; text-decoration:none; font-weight:bold; }
-    section { padding:40px; background:white; margin:20px; border-radius:8px; }
-    h2 { color:#222; }
-    footer { background:#111; color:white; text-align:center; padding:15px; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mandala Gym & Fitness Center</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black:   #0a0a0a;
+    --dark:    #121212;
+    --card:    #1a1a1a;
+    --border:  #2a2a2a;
+    --gold:    #C9A84C;
+    --gold2:   #E8C96A;
+    --white:   #F5F2EC;
+    --muted:   #888;
+    --green:   #4CAF82;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* Mandala decorative background circles */
+  body::after {
+    content: '';
+    position: fixed;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 900px; height: 900px;
+    border-radius: 50%;
+    border: 1px solid rgba(201,168,76,.04);
+    pointer-events: none;
+    z-index: 0;
+    box-shadow:
+      0 0 0 60px rgba(201,168,76,.025),
+      0 0 0 120px rgba(201,168,76,.02),
+      0 0 0 200px rgba(201,168,76,.015),
+      0 0 0 300px rgba(201,168,76,.01);
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 900;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.1rem clamp(1.5rem, 5vw, 4rem);
+    background: rgba(10,10,10,.92);
+    backdrop-filter: blur(18px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .logo {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+  }
+  .logo-main {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.2rem, 2.5vw, 1.7rem);
+    font-weight: 900;
+    letter-spacing: .06em;
+    color: var(--white);
+    line-height: 1;
+  }
+  .logo-main span { color: var(--gold); }
+  .logo-sub {
+    font-size: .55rem;
+    letter-spacing: .3em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: .2rem;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2.2rem;
+    list-style: none;
+  }
+  .nav-links a {
+    font-size: .75rem;
+    font-weight: 500;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color .2s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+
+  .nav-cta {
+    font-size: .75rem;
+    font-weight: 700;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    padding: .65rem 1.8rem;
+    background: transparent;
+    color: var(--gold);
+    border: 1px solid var(--gold);
+    cursor: pointer;
+    text-decoration: none;
+    transition: background .2s, color .2s;
+  }
+  .nav-cta:hover { background: var(--gold); color: var(--black); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    padding: 8rem clamp(1.5rem, 6vw, 5rem) 5rem;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 55% 60% at 80% 50%, rgba(201,168,76,.08) 0%, transparent 65%),
+      radial-gradient(ellipse 35% 35% at 15% 70%, rgba(76,175,130,.06) 0%, transparent 55%),
+      linear-gradient(135deg, #0f0f0f 0%, #0a0a0a 100%);
+    z-index: 0;
+  }
+
+  /* Mandala ring decoration */
+  .mandala-deco {
+    position: absolute;
+    right: -100px; top: 50%;
+    transform: translateY(-50%);
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    border: 1px solid rgba(201,168,76,.08);
+    z-index: 0;
+  }
+  .mandala-deco::before {
+    content: '';
+    position: absolute;
+    inset: 40px;
+    border-radius: 50%;
+    border: 1px solid rgba(201,168,76,.06);
+  }
+  .mandala-deco::after {
+    content: '';
+    position: absolute;
+    inset: 100px;
+    border-radius: 50%;
+    border: 1px solid rgba(201,168,76,.1);
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 680px;
+  }
+
+  .hero-eyebrow {
+    font-size: .7rem;
+    font-weight: 600;
+    letter-spacing: .4em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp .6s .2s forwards;
+    display: flex;
+    align-items: center;
+    gap: .8rem;
+  }
+  .hero-eyebrow::before, .hero-eyebrow::after {
+    content: '';
+    width: 30px; height: 1px;
+    background: var(--gold);
+    opacity: .5;
+  }
+
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3.2rem, 9vw, 7.5rem);
+    font-weight: 900;
+    line-height: .95;
+    letter-spacing: -.01em;
+    opacity: 0;
+    animation: fadeUp .7s .35s forwards;
+  }
+  .hero-title .gold { color: var(--gold); }
+  .hero-title .outline {
+    -webkit-text-stroke: 1.5px rgba(245,242,236,.3);
+    color: transparent;
+  }
+
+  .hero-tagline {
+    font-size: clamp(.9rem, 1.5vw, 1.05rem);
+    line-height: 1.8;
+    color: var(--muted);
+    margin-top: 1.8rem;
+    max-width: 480px;
+    opacity: 0;
+    animation: fadeUp .7s .5s forwards;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: .6rem;
+    margin-top: 2rem;
+    padding: .6rem 1.2rem;
+    border: 1px solid rgba(76,175,130,.3);
+    background: rgba(76,175,130,.06);
+    font-size: .75rem;
+    font-weight: 600;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    color: var(--green);
+    opacity: 0;
+    animation: fadeUp .6s .6s forwards;
+  }
+  .hero-badge::before { content: '✦'; }
+
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2.2rem;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp .7s .7s forwards;
+  }
+
+  .btn-gold {
+    font-size: .8rem;
+    font-weight: 700;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    padding: 1rem 2.5rem;
+    background: var(--gold);
+    color: var(--black);
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: background .2s, transform .15s;
+  }
+  .btn-gold:hover { background: var(--gold2); transform: translateY(-2px); }
+
+  .btn-outline {
+    font-size: .8rem;
+    font-weight: 600;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    padding: 1rem 2.5rem;
+    background: transparent;
+    color: var(--white);
+    border: 1px solid var(--border);
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: border-color .2s, transform .15s;
+  }
+  .btn-outline:hover { border-color: var(--white); transform: translateY(-2px); }
+
+  /* Stats */
+  .hero-stats {
+    display: flex;
+    gap: 3rem;
+    margin-top: 4rem;
+    padding-top: 2.5rem;
+    border-top: 1px solid var(--border);
+    opacity: 0;
+    animation: fadeUp .7s .85s forwards;
+    flex-wrap: wrap;
+  }
+  .stat-item {}
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--gold);
+    line-height: 1;
+  }
+  .stat-lbl {
+    font-size: .7rem;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: .3rem;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(28px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── SECTIONS ── */
+  section { padding: clamp(3rem, 8vw, 6rem) clamp(1.5rem, 5vw, 4rem); position: relative; z-index: 1; }
+
+  .sec-label {
+    font-size: .68rem;
+    font-weight: 600;
+    letter-spacing: .4em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: .8rem;
+    display: flex;
+    align-items: center;
+    gap: .8rem;
+  }
+  .sec-label::before {
+    content: '';
+    width: 24px; height: 1px;
+    background: var(--gold);
+  }
+
+  .sec-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.2rem, 6vw, 4.5rem);
+    font-weight: 900;
+    line-height: 1.05;
+  }
+
+  /* ── INSTALACIONES ── */
+  #instalaciones { background: var(--dark); border-top: 1px solid var(--border); }
+
+  .inst-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 3rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .inst-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+
+  .inst-card {
+    background: var(--card);
+    padding: 2.5rem 2rem;
+    position: relative;
+    overflow: hidden;
+    transition: background .25s;
+  }
+  .inst-card::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px; height: 0;
+    background: linear-gradient(180deg, var(--gold), transparent);
+    transition: height .4s ease;
+  }
+  .inst-card:hover { background: #1f1f1f; }
+  .inst-card:hover::after { height: 100%; }
+
+  .inst-icon { font-size: 2.2rem; margin-bottom: 1.2rem; display: block; }
+
+  .inst-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: .6rem;
+    color: var(--white);
+  }
+
+  .inst-desc {
+    font-size: .88rem;
+    line-height: 1.75;
+    color: var(--muted);
+  }
+
+  /* ── PRECIOS ── */
+  #precios { background: var(--black); border-top: 1px solid var(--border); }
+
+  .precios-wrap {
+    margin-top: 3rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    max-width: 900px;
+  }
+
+  .precio-card {
+    border: 1px solid var(--border);
+    padding: 2.8rem 2.5rem;
+    position: relative;
+    transition: border-color .3s, transform .3s;
+  }
+  .precio-card:hover { transform: translateY(-5px); border-color: var(--gold); }
+
+  .precio-card.promo {
+    border-color: var(--gold);
+    background: linear-gradient(150deg, rgba(201,168,76,.07) 0%, transparent 60%);
+  }
+
+  .promo-tag {
+    position: absolute;
+    top: -1px; right: 1.5rem;
+    font-size: .65rem;
+    font-weight: 700;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    background: var(--gold);
+    color: var(--black);
+    padding: .3rem .9rem;
+  }
+
+  .precio-tipo {
+    font-size: .7rem;
+    font-weight: 600;
+    letter-spacing: .3em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 1.2rem;
+  }
+  .precio-card.promo .precio-tipo { color: var(--gold); }
+
+  .precio-num {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 8vw, 4.5rem);
+    font-weight: 900;
+    line-height: 1;
+    color: var(--white);
+  }
+  .precio-num sup { font-size: 1.3rem; vertical-align: super; }
+  .precio-num small {
+    font-family: 'Montserrat', sans-serif;
+    font-size: .9rem;
+    font-weight: 400;
+    color: var(--muted);
+    margin-left: .3rem;
+  }
+
+  .precio-divider { height: 1px; background: var(--border); margin: 1.5rem 0; }
+
+  .precio-includes {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: .75rem;
+    margin-bottom: 2rem;
+  }
+  .precio-includes li {
+    font-size: .88rem;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: .7rem;
+  }
+  .precio-includes li.yes { color: var(--white); }
+  .precio-includes li::before { content: '◆'; font-size: .5rem; color: var(--gold); flex-shrink: 0; }
+
+  /* Inscripción gratis banner */
+  .inscripcion-banner {
+    margin-top: 2rem;
+    padding: 1.5rem 2rem;
+    border: 1px solid rgba(76,175,130,.3);
+    background: rgba(76,175,130,.05);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    max-width: 560px;
+  }
+  .inscripcion-icon { font-size: 1.8rem; }
+  .inscripcion-text strong {
+    display: block;
+    font-weight: 700;
+    color: var(--green);
+    font-size: .9rem;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+  }
+  .inscripcion-text span { font-size: .85rem; color: var(--muted); }
+
+  /* ── BOX ── */
+  #boxeo { background: var(--dark); border-top: 1px solid var(--border); }
+
+  .box-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    margin-top: 3rem;
+    align-items: center;
+  }
+
+  .box-visual {
+    position: relative;
+    aspect-ratio: 4/3;
+    background: var(--card);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  /* Boxing ring illustration */
+  .box-visual::before {
+    content: '';
+    position: absolute;
+    inset: 15%;
+    border: 3px solid rgba(201,168,76,.2);
+  }
+  .box-visual::after {
+    content: '';
+    position: absolute;
+    inset: 25%;
+    border: 2px solid rgba(201,168,76,.1);
+    border-radius: 50%;
+    background: radial-gradient(ellipse at center, rgba(201,168,76,.04) 0%, transparent 70%);
+  }
+
+  .box-icon-big {
+    font-size: 6rem;
+    position: relative;
+    z-index: 2;
+    filter: drop-shadow(0 0 20px rgba(201,168,76,.3));
+  }
+
+  .box-features {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .box-feature {
+    display: flex;
+    gap: 1.2rem;
+    align-items: flex-start;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .box-feature:last-child { border-bottom: none; padding-bottom: 0; }
+
+  .box-feature-icon {
+    width: 44px; height: 44px;
+    background: rgba(201,168,76,.08);
+    border: 1px solid rgba(201,168,76,.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+  }
+
+  .box-feature-title {
+    font-weight: 600;
+    font-size: .95rem;
+    margin-bottom: .3rem;
+    color: var(--white);
+  }
+  .box-feature-desc { font-size: .85rem; color: var(--muted); line-height: 1.65; }
+
+  /* ── CONTACTO ── */
+  #contacto { background: var(--black); border-top: 1px solid var(--border); }
+
+  .contact-wrap {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 4rem;
+    margin-top: 3rem;
+    align-items: start;
+  }
+
+  .contact-left p { font-size: .92rem; color: var(--muted); line-height: 1.8; margin-bottom: 2rem; }
+
+  .contact-items { display: flex; flex-direction: column; gap: 1.2rem; }
+
+  .contact-item {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+  .contact-item-icon {
+    width: 38px; height: 38px;
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+    color: var(--gold);
+  }
+  .contact-item-body strong {
+    display: block;
+    font-size: .72rem;
+    font-weight: 600;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: .2rem;
+  }
+  .contact-item-body span { font-size: .88rem; color: var(--muted); line-height: 1.6; }
+
+  /* Form */
+  .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+
+  .f-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+  .f-field { display: flex; flex-direction: column; gap: .4rem; }
+
+  .f-field label {
+    font-size: .68rem;
+    font-weight: 600;
+    letter-spacing: .25em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .f-field input,
+  .f-field textarea,
+  .f-field select {
+    background: var(--card);
+    border: 1px solid var(--border);
+    color: var(--white);
+    font-family: 'Montserrat', sans-serif;
+    font-size: .88rem;
+    padding: .9rem 1rem;
+    outline: none;
+    transition: border-color .2s;
+    resize: none;
+    width: 100%;
+  }
+  .f-field input:focus,
+  .f-field textarea:focus,
+  .f-field select:focus { border-color: var(--gold); }
+  .f-field textarea { min-height: 110px; }
+  .f-field select option { background: var(--card); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--dark);
+    border-top: 1px solid var(--border);
+    padding: 2.5rem clamp(1.5rem, 5vw, 4rem);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+  }
+
+  .footer-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-weight: 900;
+    text-decoration: none;
+    color: var(--white);
+  }
+  .footer-logo span { color: var(--gold); }
+
+  .footer-copy { font-size: .78rem; color: var(--muted); }
+
+  .footer-social { display: flex; gap: 1.2rem; }
+  .footer-social a {
+    font-size: 1.2rem;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color .2s;
+  }
+  .footer-social a:hover { color: var(--gold); }
+
+  /* ── REVEAL ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(35px);
+    transition: opacity .7s ease, transform .7s ease;
+  }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .box-grid { grid-template-columns: 1fr; }
+    .contact-wrap { grid-template-columns: 1fr; }
+    .f-row { grid-template-columns: 1fr; }
+    .hero-stats { gap: 1.5rem; }
+  }
+</style>
 </head>
 <body>
 
-<header>
-  <h1>Mandala Gym and fitness center</h1>
-  <nav>
-    <a href="#precios">Precios</a>
-    <a href="#nosotros">Quiénes Somos</a>
-    <a href="#contacto">Contacto</a>
-    <a href="#ubicacion">Ubicación</a>
-  </nav>
-</header>
-
-<section id="precios">
-  <h2>💪 Precios</h2>
-  <ul>
-    <li>Mensual: $400 MXN</li>
-    <li>Trimestral: $900 MXN</li>
-    <li>Anual: $3,800 MXN</li>
-    <li>Visita diaria: $50 MXN</li>
+<!-- NAV -->
+<nav>
+  <a class="logo" href="#">
+    <span class="logo-main">Mandala <span>Gym</span></span>
+    <span class="logo-sub">Fitness Center</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#instalaciones">Instalaciones</a></li>
+    <li><a href="#precios">Precios</a></li>
+    <li><a href="#boxeo">Boxeo</a></li>
+    <li><a href="#contacto">Contacto</a></li>
   </ul>
+  <a class="nav-cta" href="#precios">Únete Ahora</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="mandala-deco"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Bienvenido a Mandala Gym</p>
+    <h1 class="hero-title">
+      Tu mejor<br>
+      <span class="gold">versión</span><br>
+      <span class="outline">empieza aquí</span>
+    </h1>
+    <p class="hero-tagline">Instalaciones amplias, entrenadores calificados y todo lo que necesitas para alcanzar tus metas físicas en un solo lugar.</p>
+    <div class="hero-badge">✦ Inscripción completamente gratis</div>
+    <div class="hero-actions">
+      <a class="btn-gold" href="#precios">Ver Precios</a>
+      <a class="btn-outline" href="#instalaciones">Conoce el Gym</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-num">100%</div>
+        <div class="stat-lbl">Certificados</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">$0</div>
+        <div class="stat-lbl">Inscripción</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">5★</div>
+        <div class="stat-lbl">Calificación</div>
+      </div>
+    </div>
+  </div>
 </section>
 
-<section id="nosotros">
-  <h2>🏋️ Quiénes Somos</h2>
-  <p>Somos un gimnasio enfocado en salud, fuerza y bienestar. Contamos con equipo moderno y entrenadores certificados para ayudarte a lograr tus metas.</p>
+<!-- INSTALACIONES -->
+<section id="instalaciones">
+  <div class="inst-header reveal">
+    <div>
+      <p class="sec-label">Lo que tenemos</p>
+      <h2 class="sec-title">Instalaciones</h2>
+    </div>
+  </div>
+  <div class="inst-grid reveal">
+    <div class="inst-card">
+      <span class="inst-icon">🏋️</span>
+      <h3 class="inst-name">Área de Pesas</h3>
+      <p class="inst-desc">Zona equipada con pesas libres, mancuernas, barras y máquinas de resistencia para todo nivel. Amplio espacio para entrenar sin esperas.</p>
+    </div>
+    <div class="inst-card">
+      <span class="inst-icon">🚴</span>
+      <h3 class="inst-name">Área de Cardio</h3>
+      <p class="inst-desc">Caminadoras, bicicletas estáticas, elípticas y equipos cardiovasculares de última generación para quemar calorías y mejorar tu resistencia.</p>
+    </div>
+    <div class="inst-card">
+      <span class="inst-icon">🥊</span>
+      <h3 class="inst-name">Área de Boxeo</h3>
+      <p class="inst-desc">Ring profesional y saco de boxeo. Espacio exclusivo para entrenar técnica, potencia y acondicionamiento físico con clases grupales e individuales.</p>
+    </div>
+    <div class="inst-card">
+      <span class="inst-icon">👨‍🏫</span>
+      <h3 class="inst-name">Instructor Calificado</h3>
+      <p class="inst-desc">Nuestro equipo de instructores certificados te guía desde el primer día, diseñando tu rutina personalizada según tus objetivos y condición física.</p>
+    </div>
+    <div class="inst-card">
+      <span class="inst-icon">🚿</span>
+      <h3 class="inst-name">Vestidores & Casilleros</h3>
+      <p class="inst-desc">Instalaciones amplias y limpias con vestidores completos, regaderas y casilleros seguros para que entrenes con total comodidad.</p>
+    </div>
+    <div class="inst-card">
+      <span class="inst-icon">🏟️</span>
+      <h3 class="inst-name">Amplias Instalaciones</h3>
+      <p class="inst-desc">Espacio diseñado para que entrenes cómodo, con buena ventilación, iluminación profesional y área de descanso. Todo lo que necesitas bajo un mismo techo.</p>
+    </div>
+  </div>
 </section>
 
+<!-- PRECIOS -->
+<section id="precios">
+  <div class="reveal">
+    <p class="sec-label">Membresías</p>
+    <h2 class="sec-title">Precios</h2>
+  </div>
+  <div class="precios-wrap reveal">
+
+    <!-- Mensual -->
+    <div class="precio-card">
+      <div class="precio-tipo">Mensualidad</div>
+      <div class="precio-num"><sup>$</sup>400<small>/mes</small></div>
+      <div class="precio-divider"></div>
+      <ul class="precio-includes">
+        <li class="yes">Acceso completo al gym</li>
+        <li class="yes">Área de pesas ilimitada</li>
+        <li class="yes">Área de cardio</li>
+        <li class="yes">Clases de boxeo</li>
+        <li class="yes">Uso de vestidores</li>
+        <li class="yes">Instructor disponible</li>
+      </ul>
+      <a class="btn-outline" href="#contacto" style="display:block;text-align:center;">Inscribirme</a>
+    </div>
+
+    <!-- Promoción 3 meses -->
+    <div class="precio-card promo">
+      <div class="promo-tag">🔥 Mejor precio</div>
+      <div class="precio-tipo">Promoción 3 meses</div>
+      <div class="precio-num"><sup>$</sup>900<small>/3 meses</small></div>
+      <div class="precio-divider"></div>
+      <ul class="precio-includes">
+        <li class="yes">Todo incluido del plan mensual</li>
+        <li class="yes">Ahorras $300 vs mensual</li>
+        <li class="yes">Acceso a todas las clases</li>
+        <li class="yes">Evaluación física inicial</li>
+        <li class="yes">Rutina personalizada</li>
+        <li class="yes">Prioridad en horarios</li>
+      </ul>
+      <a class="btn-gold" href="#contacto" style="display:block;text-align:center;">Aprovechar Promo</a>
+    </div>
+
+  </div>
+
+  <!-- Inscripción gratis -->
+  <div class="inscripcion-banner reveal">
+    <div class="inscripcion-icon">🎉</div>
+    <div class="inscripcion-text">
+      <strong>Inscripción completamente gratis</strong>
+      <span>Sin costo de registro. Pagas solo tu membresía y empiezas hoy mismo.</span>
+    </div>
+  </div>
+</section>
+
+<!-- BOXEO -->
+<section id="boxeo">
+  <div class="reveal">
+    <p class="sec-label">Especialidad</p>
+    <h2 class="sec-title">Área de Boxeo</h2>
+  </div>
+  <div class="box-grid reveal">
+    <div class="box-visual">
+      <span class="box-icon-big">🥊</span>
+    </div>
+    <div class="box-features">
+      <div class="box-feature">
+        <div class="box-feature-icon">🏟️</div>
+        <div>
+          <div class="box-feature-title">Ring Profesional</div>
+          <p class="box-feature-desc">Ring de boxeo de medidas reglamentarias, listo para sparring, clases técnicas y entrenamiento de alto rendimiento.</p>
+        </div>
+      </div>
+      <div class="box-feature">
+        <div class="box-feature-icon">👊</div>
+        <div>
+          <div class="box-feature-title">Saco de Boxeo</div>
+          <p class="box-feature-desc">Sacos profesionales de distintos pesos y alturas para trabajar combinaciones, potencia y velocidad de golpe.</p>
+        </div>
+      </div>
+      <div class="box-feature">
+        <div class="box-feature-icon">👨‍🏫</div>
+        <div>
+          <div class="box-feature-title">Clases Grupales</div>
+          <p class="box-feature-desc">Clases de boxeo para todos los niveles, desde principiantes hasta avanzados. Técnica, cardio y diversión garantizados.</p>
+        </div>
+      </div>
+      <div class="box-feature">
+        <div class="box-feature-icon">💪</div>
+        <div>
+          <div class="box-feature-title">Acondicionamiento Físico</div>
+          <p class="box-feature-desc">El boxeo es el cardio más completo. Quema grasa, tonifica y mejora tu coordinación en cada sesión.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACTO -->
 <section id="contacto">
-  <h2>📞 Contacto</h2>
-  <p>Teléfono: 555-123-4567</p>
-  <p>Email: contacto@gimnasio.com</p>
-  <p>Horario: Lunes a Sábado 6am - 10pm</p>
+  <div class="reveal">
+    <p class="sec-label">Estamos aquí</p>
+    <h2 class="sec-title">Contáctanos</h2>
+  </div>
+  <div class="contact-wrap reveal">
+    <div class="contact-left">
+      <p>¿Listo para empezar? Visítanos o escríbenos. Te orientamos sin compromiso y te ayudamos a elegir el plan que más te conviene.</p>
+      <div class="contact-items">
+        <div class="contact-item">
+          <div class="contact-item-icon">📍</div>
+          <div class="contact-item-body">
+            <strong>Dirección</strong>
+            <span>Tu dirección aquí<br>Ciudad, Estado</span>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-icon">📞</div>
+          <div class="contact-item-body">
+            <strong>Teléfono / WhatsApp</strong>
+            <span>Tu número aquí</span>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-icon">🕐</div>
+          <div class="contact-item-body">
+            <strong>Horario</strong>
+            <span>Lun–Vie: 6:00 – 22:00<br>Sáb–Dom: 7:00 – 20:00</span>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-icon">📱</div>
+          <div class="contact-item-body">
+            <strong>Redes Sociales</strong>
+            <span>@mandala.gym</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <form class="contact-form" onsubmit="handleSubmit(event)">
+      <div class="f-row">
+        <div class="f-field">
+          <label for="nombre">Nombre</label>
+          <input type="text" id="nombre" placeholder="Tu nombre completo">
+        </div>
+        <div class="f-field">
+          <label for="tel">Teléfono</label>
+          <input type="tel" id="tel" placeholder="Tu número">
+        </div>
+      </div>
+      <div class="f-field">
+        <label for="interes">¿Qué te interesa?</label>
+        <select id="interes">
+          <option value="">Selecciona una opción</option>
+          <option>Mensualidad — $400/mes</option>
+          <option>Promo 3 meses — $900</option>
+          <option>Clases de Boxeo</option>
+          <option>Información general</option>
+        </select>
+      </div>
+      <div class="f-field">
+        <label for="msg">Mensaje (opcional)</label>
+        <textarea id="msg" placeholder="¿Tienes alguna pregunta? Escríbenos..."></textarea>
+      </div>
+      <button type="submit" id="submit-btn" class="btn-gold" style="align-self:flex-start;border:none;cursor:pointer;">
+        Enviar mensaje
+      </button>
+    </form>
+  </div>
 </section>
 
-<section id="ubicacion">
-  <h2>📍 Ubicación</h2>
-  <p>Av. Principal 123, Colonia Centro, Ciudad de México</p>
-  <iframe src="https://www.google.com/maps" width="100%" height="250"></iframe>
-</section>
-
+<!-- FOOTER -->
 <footer>
-  <p>© 2026 Gimnasio Fuerza Total</p>
+  <a class="footer-logo" href="#">Mandala <span>Gym</span></a>
+  <p class="footer-copy">© 2026 Mandala Gym & Fitness Center · Todos los derechos reservados</p>
+  <div class="footer-social">
+    <a href="#" title="Instagram">📸</a>
+    <a href="#" title="Facebook">📘</a>
+    <a href="#" title="WhatsApp">💬</a>
+  </div>
 </footer>
 
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Form
+  function handleSubmit(e) {
+    e.preventDefault();
+    const btn = document.getElementById('submit-btn');
+    btn.textContent = '✓ Mensaje enviado';
+    btn.style.background = '#4CAF82';
+    setTimeout(() => {
+      btn.textContent = 'Enviar mensaje';
+      btn.style.background = '';
+    }, 3000);
+  }
+
+  // Nav highlight
+  const sections = document.querySelectorAll('section[id]');
+  const navAs = document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll', () => {
+    let cur = '';
+    sections.forEach(s => { if (window.scrollY >= s.offsetTop - 120) cur = s.id; });
+    navAs.forEach(a => {
+      a.style.color = a.getAttribute('href') === `#${cur}` ? 'var(--gold)' : '';
+    });
+  });
+</script>
 </body>
 </html>
